@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>E:\lectures\lectures\</FILEPATH>
+      <FILENAME>ahmed14.cpp</FILENAME>
+      <LINE>269</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26812</DEFECTCODE>
+    <DESCRIPTION>The enum type 'sf::PrimitiveType' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).</DESCRIPTION>
+    <FUNCTION>sf::VertexArray::{ctor}</FUNCTION>
+    <DECORATED>??0VertexArray@sf@@QEAA@AEBV01@@Z</DECORATED>
+    <FUNCLINE>192</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>E:\lectures\lectures\</FILEPATH>
+      <FILENAME>ahmed14.cpp</FILENAME>
+      <LINE>1479</LINE>
+      <COLUMN>7</COLUMN>
+    </SFA>
+    <DEFECTCODE>26812</DEFECTCODE>
+    <DESCRIPTION>The enum type 'sf::Keyboard::Key' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).</DESCRIPTION>
+    <FUNCTION>fromKtoS</FUNCTION>
+    <DECORATED>?fromKtoS@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBW4Key@Keyboard@sf@@@Z</DECORATED>
+    <FUNCLINE>1479</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>

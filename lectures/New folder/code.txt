@@ -1,0 +1,269 @@
+#include <SFML/Graphics.hpp>
+#include<sfml\Audio.hpp>
+#include <sfml\system.hpp>
+#include<sfml\network.hpp>
+#include<sfml\window.hpp>
+#include <iostream>
+#include<time.h>
+
+using namespace sf;
+using namespace std;
+void Rightmove(Sprite& player_sprite, int&xpos, int &ypos);
+void Leftmove(Sprite& player_sprite1, int& xpos, int& ypos);
+void upmove(Sprite& player_sprite1, int& xpos, int& ypos);
+
+struct  player12
+{
+    int Total=1;
+    Sprite* sprites = { 0 };
+    int X_stopanimation = 0;
+    int Y_stopanimation = 0;
+}player[5];
+int main()
+{
+    sf::RenderWindow window(sf::VideoMode(1500, 1000), "ahmed", sf::Style::Close | sf::Style::Resize);
+    ///////////////////////////////////////////////////////
+
+    Texture player1;
+    player1.loadFromFile("playerplayer1.png");
+    Sprite player_sprite1;
+    player_sprite1.setTexture(player1);
+    player_sprite1.setTextureRect(IntRect(8, 0, 75, 125));
+    player_sprite1.setPosition(Vector2f(20.0f, 775.0f));
+    player[1].sprites = &player_sprite1;
+    //////////////////////////////////////////////////
+    Texture player2;
+    player2.loadFromFile("playerplayer2.png");
+
+    Sprite player_sprite2;
+    player_sprite2.setTexture(player2);
+    player_sprite2.setTextureRect(IntRect(8, 0, 75, 125));
+    player_sprite2.setPosition(Vector2f(20.0f, 775.0f));
+    player[2].sprites = &player_sprite2;
+    ///////////////////////////
+    Texture player3;
+    player3.loadFromFile("playerplayer442.png");
+    Sprite player_sprite3;
+    player_sprite3.setTexture(player3);
+    player_sprite3.setTextureRect(IntRect(8, 0, 75, 125));
+    player_sprite3.setPosition(Vector2f(20.0f, 775.0f));
+    player[3].sprites = &player_sprite3;
+    ////////////////////////////
+    Texture player4;
+    player4.loadFromFile("playerplayer4.png");
+    Sprite player_sprite4;
+    player_sprite4.setTexture(player4);
+    player_sprite4.setTextureRect(IntRect(8, 0, 75, 125));
+    player_sprite4.setPosition(Vector2f(20.0f, 775.0f));
+    player[4].sprites = &player_sprite4;
+    ////////////////////
+    ////BoX of Dice Inter
+    RectangleShape rect;
+    rect.setFillColor(Color::Green);
+    rect.setSize(Vector2f(50.f, 50.f));
+    rect.setPosition(Vector2f(1100.f, 600.f));
+    rect.setOrigin(Vector2f(25.f, 25.f));
+    /////////////////////////////
+    Texture grand;
+    grand.loadFromFile("1.png");
+    Sprite ground(grand);
+    ground.setPosition(Vector2f(30.f, 50.f));
+    ////////////////////////////////////
+    srand(time(0));
+    int result, xposition, yposition;
+    Time time = milliseconds(1);
+    //int arr1[10], arr2[10];
+    ////////////////////////////////////////////
+    while (window.isOpen())
+    {
+        int k = 3;//////numberof charachter
+        Event event;
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+                break;
+            }
+            }
+        }
+        if (Mouse::isButtonPressed(Mouse::Left))
+        {
+            if ((Mouse::getPosition().x > 1100) && (Mouse::getPosition().y > 600) ) {
+                result = rand() % 6 + 1;
+                cout << result << endl;
+                cout << player[k].Total + result << endl;
+
+                for (int i = 0; i < result; i++) {
+                    if (player[k].Total <= 99) {
+                        player[k].Total++;
+                        xposition = player[k].sprites->getPosition().x;
+                        yposition = player[k].sprites->getPosition().y;
+                        //  cout << rect.getPosition().x << endl;
+                        if (((player[k].Total / 10) % 2 == 0 || player[k].Total <= 10) && (player[k].Total % 10 != 1)) {
+
+                            while (player[k].sprites->getPosition().x <= xposition + 87) {
+                                Rightmove(*player[k].sprites, player[k].X_stopanimation, player[k].Y_stopanimation);
+                                window.clear();
+                                window.draw(ground);
+                                window.draw(*player[k].sprites);
+                                window.draw(rect);
+                                window.display();
+                                sleep(time);
+                            }
+
+
+                        }
+                        else if (((player[k].Total / 10) % 2 == 1 && player[k].Total % 10 != 1) || (player[k].Total % 10) % 2 == 0) {
+                            while (player[k].sprites->getPosition().x >= xposition - 87) {
+                                Leftmove(*player[k].sprites, player[k].X_stopanimation, player[k].Y_stopanimation);
+                                window.clear();
+                                window.draw(ground);
+                                window.draw(*player[k].sprites);
+                                window.draw(rect);
+                                window.display();
+                                sleep(time);
+
+                            }
+                        }
+                        if (player[k].Total % 10 == 1) {
+                            while (player[k].sprites->getPosition().y >= yposition - 90) {
+                                upmove(*player[k].sprites, player[k].X_stopanimation, player[k].Y_stopanimation);
+                                window.clear();
+                                window.draw(ground);
+                                window.draw(*player[k].sprites);
+                                window.draw(rect);
+                                window.display();
+                                sleep(time);
+                            }
+                        }
+                        if (player[k].Total == 20 || player[k].Total == 40 || player[k].Total == 60 || player[k].Total == 80 || player[k].Total == 100)
+                        {
+                            while (player[k].sprites->getPosition().x >= xposition - 87) {
+                                Leftmove(*player[k].sprites, player[k].X_stopanimation, player[k].Y_stopanimation);
+                                window.clear();
+                                window.draw(ground);
+                                window.draw(*player[k].sprites);
+                                window.draw(rect);
+                                window.display();
+                                sleep(time);
+                            }
+                        }
+                        if (player[k].Total == 30 || player[k].Total == 50 || player[k].Total == 70 || player[k].Total == 90)
+                        {
+                            while (player[k].sprites->getPosition().x <= xposition + 87) {
+                                Rightmove(*player[k].sprites, player[k].X_stopanimation, player[k].Y_stopanimation);
+                                window.clear();
+                                window.draw(ground);
+                                window.draw(*player[k].sprites);
+                                window.draw(rect);
+                                window.display();
+                                sleep(time);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+            window.clear();
+            window.draw(ground);
+            window.draw(*player[k].sprites);
+            window.draw(rect);
+            window.display();
+        
+
+    }
+}
+    
+
+
+void Rightmove(Sprite& player_sprite1, int& xpos, int& ypos)
+{
+    
+    
+        ypos = 4;
+
+        xpos++;
+     
+        player_sprite1.move(Vector2f(1.f, 0.f));
+        xpos = xpos % 6;
+        int   c = 100, b = 133;
+        if (xpos == 1)
+        {
+            player_sprite1.setTextureRect(IntRect(22, c * ypos, 58, b));
+        }
+        else if (xpos == 2)
+            player_sprite1.setTextureRect(IntRect(100, c * ypos, 58, b));
+
+        else if (xpos == 4)
+            player_sprite1.setTextureRect(IntRect(315, c * ypos, 58, b));
+        else if (xpos == 5)
+            player_sprite1.setTextureRect(IntRect(405, c * ypos, 58, b));
+
+        else if (xpos == 3 || xpos == 6)
+
+            player_sprite1.setTextureRect(IntRect(484, c * ypos, 58, b));
+    
+}
+
+void Leftmove(Sprite& player_sprite1, int& xpos, int& ypos)
+{
+    
+    
+        ypos = 3;
+
+        xpos++;
+
+        player_sprite1.move(Vector2f(-1.f, 0.f));
+        xpos = xpos % 6;
+        int   c = 90, b = 129;
+        if (xpos == 1)
+        {
+            player_sprite1.setTextureRect(IntRect(22, c * ypos, 58, b));
+        }
+        else if (xpos == 2)
+            player_sprite1.setTextureRect(IntRect(100, c * ypos, 58, b));
+
+        else if (xpos == 4)
+            player_sprite1.setTextureRect(IntRect(315, c * ypos, 58, b));
+        else if (xpos == 5)
+            player_sprite1.setTextureRect(IntRect(405, c * ypos, 58, b));
+
+        else if (xpos == 3 || xpos == 6)
+
+            player_sprite1.setTextureRect(IntRect(484, c * ypos, 58, b));
+    
+}
+
+void upmove(Sprite& player_sprite1, int& xpos, int& ypos)
+{
+    
+    
+        ypos = 2;
+
+        xpos++;
+
+        player_sprite1.move(Vector2f(0.f, -1.f));
+        xpos = xpos % 6;
+        int   c = 70;
+        if (xpos == 1)
+        {
+            player_sprite1.setTextureRect(IntRect(22, c * ypos, 58, 125));
+        }
+        else if (xpos == 2)
+            player_sprite1.setTextureRect(IntRect(100, c * ypos, 58, 125));
+
+        else if (xpos == 4)
+            player_sprite1.setTextureRect(IntRect(315, c * ypos, 58, 125));
+        else if (xpos == 5)
+            player_sprite1.setTextureRect(IntRect(405, c * ypos, 58, 125));
+
+        else if (xpos == 3 || xpos == 6)
+
+            player_sprite1.setTextureRect(IntRect(484, c * ypos, 58, 125));
+  
+}
+
+

@@ -1,0 +1,13 @@
+﻿  ahmed14.cpp
+E:\lectures\lectures\ahmed14.cpp(62,43): warning C4390: ';': empty controlled statement found; is this the intent?
+E:\lectures\lectures\ahmed14.cpp(370,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+E:\lectures\lectures\ahmed14.cpp(374,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+E:\lectures\lectures\ahmed14.cpp(424,21): warning C4244: '=': conversion from 'time_t' to 'int', possible loss of data
+E:\lectures\lectures\ahmed14.cpp(446,29): warning C4244: '=': conversion from 'time_t' to 'int', possible loss of data
+E:\lectures\lectures\ahmed14.cpp(535,29): warning C4244: '=': conversion from 'time_t' to 'int', possible loss of data
+E:\lectures\lectures\ahmed14.cpp(1352,47): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+  lectures.vcxproj -> E:\lectures\x64\Debug\lectures.exe

@@ -1,0 +1,190 @@
+#include <SFML/Graphics.hpp>
+#include<sfml\Audio.hpp>
+#include <sfml\system.hpp>
+#include<sfml\network.hpp>
+#include<sfml\window.hpp>
+#include <iostream>
+using namespace sf;
+using namespace std;
+void Rightmove(Texture texture1, Sprite spritestop, RenderWindow& window0, float&xpos, float ypos);
+void Leftmove(Texture texture1, Sprite spritestop, RenderWindow& window0, float& xpos, float ypos);
+struct  player12
+{
+    Texture texts[5];
+    Sprite* sprites[5] = { 0 };
+}player[5];
+int main()
+{
+   
+    SoundBuffer sound1;
+    sound1.loadFromFile("sound1.wav");
+    Sound sound;
+    sound.setBuffer(sound1);
+    sf::RenderWindow window(sf::VideoMode(800, 800), "ahmed", sf::Style::Close | sf::Style::Resize);
+    /////////////////////////////////////////////direction
+    bool dir[5]; 
+    for (int i = 1; i < 5; i++)
+   dir[i] = true;
+    float x = 50, y = 500, v = 5;
+///////////////////////////////////////////////////////////////////////////////player1 lookat Left 
+player[1].texts[2].loadFromFile("300000.png"); ///player1>>>>>>>>blue
+Sprite player1Left(player[1].texts[2]);
+player1Left.setPosition(x, y);
+player[1].sprites[2] = &player1Left;
+
+player[2].texts[2].loadFromFile("30000.png");///player2>>>>>>>gold
+Sprite player2Left(player[2].texts[2]);
+player2Left.setPosition(x, y);
+player[2].sprites[2] = &player2Left;
+
+player[3].texts[2].loadFromFile("300021.png");///player3>>??????
+Sprite player3Left(player[3].texts[2]);
+player3Left.setPosition(x, y);
+player[3].sprites[2] = &player3Left;
+
+player[4].texts[2].loadFromFile("300011.png");//player4...pb ?????
+Sprite player4Left(player[4].texts[2]);
+player4Left.setPosition(x, y);
+player[4].sprites[2] = &player4Left;
+/////////////////////////////////////////////////////////////// look at Right and player{i}Right[1]
+player[1].texts[1].loadFromFile("1000.png"); ///player1
+Sprite player1Right(player[1].texts[1]);
+player1Right.setPosition(x, y);
+player[1].sprites[1] = &player1Right;
+
+player[2].texts[1].loadFromFile("100011.png");///player2
+Sprite player2Right(player[2].texts[1]);
+player2Right.setPosition(x, y);
+player[2].sprites[1] = &player2Right;
+
+player[3].texts[1].loadFromFile("100031.png");///player3
+Sprite player3Right(player[3].texts[1]);
+player[3].sprites[1] = &player3Right;
+
+player[4].texts[1].loadFromFile("100021.png");//player4
+Sprite player4Right(player[4].texts[1]);
+player4Right.setPosition(x, y);
+player[4].sprites[1] = &player4Right;
+/////////////////////////////////////////////////////////////////////////////////move Leftplayer [i][3]
+player[1].texts[3].loadFromFile("40002.png");
+player[2].texts[3].loadFromFile("400042.png");
+player[3].texts[3].loadFromFile("400001.png");
+player[4].texts[3].loadFromFile("400011.png");
+
+////////////////////////////////////// move Rightplayer [i][0]
+
+player[1].texts[0].loadFromFile("20003.png");
+player[2].texts[0].loadFromFile("20007.png");
+player[3].texts[0].loadFromFile("200011.png");
+player[4].texts[0].loadFromFile("200021.png");
+
+//////////////////////////////////////
+Texture grand;
+grand.loadFromFile("1.png");
+Sprite ground(grand);
+
+
+ while (window.isOpen())
+    {
+        int i = 4;
+        Event event;
+       // window.draw(ground);
+        //window.display();
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                window.close();
+                break;
+            }
+            }
+        }
+       
+
+        if (dir [i]== true)
+        {
+            
+            window.clear();
+                window.draw(*player[i].sprites[1]);
+            window.display();
+        }
+        if (dir[i] == false)
+        {
+            window.clear();
+            window.draw(*player[i].sprites[2]);
+            window.display();
+
+        }
+       if (Keyboard::isKeyPressed(Keyboard::Key::Right))
+     {
+            Rightmove(player[i].texts[0],* player[i].sprites[1], window, x, y);
+           player[i].sprites[1]->setPosition(x, y);
+        
+            dir[i] = true;
+        }
+       if (Keyboard::isKeyPressed(Keyboard::Key::Left))
+        {
+           Leftmove(player[i].texts[3], *player[i].sprites[2], window, x, y);
+           player[i].sprites[2]->setPosition(x, y);
+        
+           dir[i] = false;
+        }
+        }
+}
+void Rightmove(Texture texture1,Sprite spritestop,RenderWindow & window0, float&xpos , float ypos)
+
+{
+        IntRect rectSourceSpriteRight(184, 0, 97, 158);
+        Sprite player(texture1, rectSourceSpriteRight);
+        Clock clock1;
+        rectSourceSpriteRight.left = 0;
+        if (clock1.getElapsedTime().asSeconds()>1000.f)
+        {
+            if (rectSourceSpriteRight.left == 600)
+                rectSourceSpriteRight.left = 0;
+            else
+                rectSourceSpriteRight.left += 100;
+            player.setTextureRect(rectSourceSpriteRight);
+            clock1.restart();
+        }
+       
+        xpos = float(xpos + .2);
+        player.setPosition(xpos, ypos);
+        
+        spritestop.setPosition(xpos, ypos);
+        window0.draw(player);
+        window0.display();
+
+}
+
+void Leftmove(Texture texture1, Sprite spritestop, RenderWindow& window0, float& xpos, float ypos)
+{
+    IntRect rectSourceSpriteRight(184, 0, 97, 158);
+    Sprite player(texture1, rectSourceSpriteRight);
+    Clock clock1;
+    rectSourceSpriteRight.left = 600;
+    if (clock1.getElapsedTime().asSeconds() > 1000.f)
+    {
+        if (rectSourceSpriteRight.left == 0)
+            rectSourceSpriteRight.left = 600;
+        else
+        {
+            rectSourceSpriteRight.left -= 100;
+
+        }
+        player.setTextureRect(rectSourceSpriteRight);
+
+        clock1.restart();
+    }
+  
+    
+    xpos = float(xpos -.2);
+    player.setPosition(xpos, ypos);
+   
+    spritestop.setPosition(xpos, ypos);
+    window0.draw(player);
+    window0.display();
+}
+//(Mouse::getPosition(window).x >= 0 && Mouse::getPosition(window).y >= 0 && Mouse::getPosition(window).y >= 100 && Mouse::getPosition(window).x >= 100)
